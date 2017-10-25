@@ -48,7 +48,7 @@ public class UserController {
     public ResponseEntity<?> getUser(@PathVariable("userId") long id) {
         logger.info("Finding User with id {}", id);
 
-        User user = userService.findById(id);
+        User user = getUserById(id);
         return new ResponseEntity<User>(user, HttpStatus.OK);
     }
 
@@ -61,12 +61,7 @@ public class UserController {
     @RequestMapping(value = "/{userId}", method = RequestMethod.DELETE)
     public ResponseEntity<?> deleteUser(@PathVariable("userId") long userId) {
         logger.info("Deleting User with id {}", userId);
-
-        User user = userService.findById(userId);
-        if (user == null) {
-            logger.error("User with id {} not found.", userId);
-            throw new RuntimeException("User with id " + userId + " not found.");
-        }
+        getUserById(userId);
         userService.delete(userId);
         return new ResponseEntity<User>(HttpStatus.NO_CONTENT);
     }
@@ -104,18 +99,23 @@ public class UserController {
     public ResponseEntity<?> updateUser(@PathVariable("id") long id, @RequestBody User user) {
         logger.info("Updating User with id {}", id);
 
-        User currentUser = userService.findById(id);
-
-        if (currentUser == null) {
-            logger.error("User with id {} not found.", id);
-            throw new RuntimeException("User with id " + id + " not found.");
-        }
+        User currentUser = getUserById(id);
 
         user.setId(currentUser.getId());
 
         userService.save(user);
 
-        return new ResponseEntity<User>(currentUser, HttpStatus.OK);
+        return new ResponseEntity<User>(user, HttpStatus.OK);
+    }
+
+    private User getUserById(long userId) {
+        User user = userService.findById(userId);
+        if (user == null) {
+            logger.error("User with id {} not found.", userId);
+            throw new RuntimeException("User with id " + userId + " not found.");
+        }
+
+        return user;
     }
 
 }

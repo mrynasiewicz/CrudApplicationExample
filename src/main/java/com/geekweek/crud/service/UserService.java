@@ -33,6 +33,9 @@ public class UserService {
 
     public User findById(long id) {
         UserEntity userEntity = userRepository.findOne(id);
+        if(userEntity == null) {
+            return null;
+        }
         return mapping(userRepository.findOne(id));
     }
 
