@@ -1,0 +1,16 @@
+server:
+  port: 8081
+  contextPath: /CrudApplicationExample
+
+spring:
+  datasource:
+    url: jdbc:h2:tcp://localhost/crud-application;MODE=Oracle
+    driverClassName: org.h2.Driver
+    username: sa
+    password:
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: update
+      show_sql: true
+      format_sql: true

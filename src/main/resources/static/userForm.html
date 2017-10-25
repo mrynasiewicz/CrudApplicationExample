@@ -1,0 +1,71 @@
+<md-dialog flex="40">
+    <form name="userForm">
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2>{{userFormDialog.title}}</h2>
+                <span flex></span>
+                <md-button class="md-icon-button" ng-click="userFormDialog.cancel()">
+                    <md-icon md-svg-src="img/icons/ic_close_24px.svg" aria-label="Close dialog"></md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-dialog-content>
+            <div layout="column" layout-margin layout-padding>
+                <md-input-container >
+                    <label>Imię</label>
+                    <input name="firstName"
+                           required
+                           minlength="3"
+                           md-maxlength="30"
+                           ng-model="userFormDialog.user.firstName">
+                    <div ng-messages="userForm.firstName.$error" ng-show="userForm.firstName.$dirty">
+                        <div ng-message="required">Pole jest wymagane</div>
+                        <div ng-message-exp="['minlength', 'md-maxlength']">
+                            Imię musi zawierać od 3 do 30 znaków
+                        </div>
+                    </div>
+                </md-input-container>
+                <md-input-container>
+                    <label>Nazwisko</label>
+                    <input ng-model="userFormDialog.user.lastName"
+                           name="lastName"
+                           required
+                           minlength="3"
+                           md-maxlength="30">
+                    <div ng-messages="userForm.lastName.$error" ng-show="userForm.lastName.$dirty">
+                        <div ng-message="required">Pole jest wymagane</div>
+                        <div ng-message-exp="['minlength', 'md-maxlength']">
+                            Nazwisko musi zawierać od 3 do 30 znaków
+                        </div>
+                    </div>
+                </md-input-container>
+                <md-input-container>
+                    <label>Wiek</label>
+                    <input ng-model="userFormDialog.user.age"
+                           name="age"
+                           type="number"
+                           ng-step="1"
+                           min = "18"
+                           max = "99">
+                    <div ng-messages="userForm.age.$error" ng-show="userForm.age.$dirty">
+                        <div ng-message-exp="['min', 'max']">
+                            Wiek musi być w zakresie od 18 do 99
+                        </div>
+                    </div>
+                </md-input-container>
+            </div>
+        </md-dialog-content>
+
+        <md-dialog-actions layout="row" layout-margin>
+            <span flex></span>
+            <md-button class="md-primary md-raised"
+                       ng-click="userFormDialog.addUser()"
+                       ng-show="userFormDialog.user.id == null"
+                       ng-disabled="userForm.$invalid">Dodaj</md-button>
+            <md-button class="md-primary md-raised"
+                       ng-click="userFormDialog.editUser()"
+                       ng-show="userFormDialog.user.id != null"
+                       ng-disabled="userForm.$invalid">Zapisz</md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>
