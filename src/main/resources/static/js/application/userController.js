@@ -71,18 +71,5 @@ angular.module('crudApplication').controller('userController', function($scope, 
         });
     };
 
-    function deleteUser(userId) {
-        var params = {
-          userId: userId
-        };
-        userService.delete(params).$promise.then(function() {
-            loadUsers();
-        });
-    }
-
-    function get() {
-        return userService.get({userId: "1"});
-    }
-
     loadUsers();
 });
