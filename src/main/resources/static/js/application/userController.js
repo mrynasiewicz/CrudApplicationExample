@@ -5,7 +5,6 @@ angular.module('crudApplication').controller('userController', function($scope, 
 
     $scope.users = [];
     $scope.edit = editUser;
-    $scope.delete = deleteUser;
     $scope.add = addUser;
 
     function loadUsers(){
